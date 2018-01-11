@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import { Shape } from './shape'
 import { Size } from './size'
 import { Color } from './color'
@@ -11,12 +12,21 @@ export class Product extends mongoose.Schema {
       name: {
         type: String,
         required: true,
-        trim: true,
-        minlength: 1
+        trim: true
       },
       price: {
         type: Number,
         required: true,
+        trim: true
+      },
+      description: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      views: {
+        type: Number,
+        required: false,
         trim: true
       },
       shape: {

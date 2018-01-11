@@ -1,16 +1,17 @@
- import { DB } from './db/db'
- import express from 'express'
- import bodyParser from 'body-parser'
- import { BASE_URL } from './api/api'
- import { CollectionController } from './controller/collection-controller'
- import { ColorController } from './controller/color-controller'
- import { ProductController } from './controller/product-controller'
- import { ShapeController } from './controller/shape-controller'
- import { SizeController } from './controller/size-controller'
- import { StyleController } from './controller/style-controller'
- import { WeaveController } from './controller/weave-controller'
+import express from 'express'
+import bodyParser from 'body-parser'
 
- new DB().connect()
+import { DB } from './db/db'
+import { BASE_URL } from './api/api'
+import { CollectionController } from './controller/collection-controller'
+import { ColorController } from './controller/color-controller'
+import { ProductController } from './controller/product-controller'
+import { ShapeController } from './controller/shape-controller'
+import { SizeController } from './controller/size-controller'
+import { StyleController } from './controller/style-controller'
+import { WeaveController } from './controller/weave-controller'
+
+new DB().connect()
     .then(msg => {
       let app = express()
       let port = process.env.PORT || 3000

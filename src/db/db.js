@@ -8,9 +8,7 @@ export class DB {
 
   connect () {
     return new Promise((resolve, reject) => {
-      mongoose.connect(this.uri, {
-        useMongoClient: true
-      })
+      mongoose.connect(this.uri, { useMongoClient: true })
         .then(() => resolve('connected to DB'))
         .catch(() => reject(new Error('cannot connect to DB')))
     })

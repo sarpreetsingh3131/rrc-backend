@@ -8,6 +8,11 @@ export class Color extends mongoose.Schema {
         required: true,
         unique: true,
         trim: true
+      },
+      image: {
+        type: String,
+        required: true,
+        trim: true
       }
     })
   }
