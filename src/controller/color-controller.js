@@ -4,7 +4,7 @@ import { Controller } from './controller'
 import { CREATE_COLOR, RETRIEVE_COLOR, RETRIEVE_COLORS, UPDATE_COLOR, DELETE_COLOR } from '../api/api'
 import { ColorRepository } from '../repository/color-repository'
 
-export class CollorController extends express.Router {
+export class ColorController extends express.Router {
   constructor () {
     super()
     this.controller = new Controller(new ColorRepository())

@@ -4,7 +4,7 @@ import { Controller } from './controller'
 import { CREATE_STYLE, RETRIEVE_STYLE, RETRIEVE_STYLES, UPDATE_STYLE, DELETE_STYLE } from '../api/api'
 import { StyleRepository } from '../repository/style-repository'
 
-export class CollorController extends express.Router {
+export class StyleController extends express.Router {
   constructor () {
     super()
     this.controller = new Controller(new StyleRepository())

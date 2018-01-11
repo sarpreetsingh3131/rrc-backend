@@ -2,15 +2,18 @@ import mongoose from 'mongoose'
 
 import { Collection } from '../model/collection'
 import { Repository } from './repository'
+import { ImageHandler, COLLECTIONS_DIR } from '../handler/image-handler'
 
-export class CollectionRepository {
+export class CollectionRepository extends Repository {
   constructor () {
-    this.repository = new Repository(mongoose.model('collection', new Collection()))
+    super(mongoose.model('collection', new Collection()))
+    this.handler = new ImageHandler(COLLECTIONS_DIR)
   }
 
   create (collection) {
     return new Promise((resolve, reject) => {
-      this.repository.create({ name: collection.name, image: collection.image })
+      this.handler.create(collection.image)
+        .then(path => { return super.create({ name: collection.name, image: path }) })
         .then(collection => resolve({ collection: collection }))
         .catch(err => reject(err))
     })
@@ -18,7 +21,7 @@ export class CollectionRepository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      this.repository.retrieve(id)
+      super.retrieve(id)
         .then(collections => resolve(id ? { collection: collections } : { collections: collections }))
         .catch(err => reject(err))
     })
@@ -26,7 +29,8 @@ export class CollectionRepository {
 
   update (collection) {
     return new Promise((resolve, reject) => {
-      this.repository.update(collection.id, { name: collection.name, image: collection.image })
+      this.handler.create(collection.image)
+        .then(path => super.update(collection.id, { name: collection.name, image: path }))
         .then(collection => resolve({ collection: collection }))
         .catch(err => reject(err))
     })
@@ -34,8 +38,9 @@ export class CollectionRepository {
 
   delete (id) {
     return new Promise((resolve, reject) => {
-      this.repository.delete(id)
-        .then(collection => resolve({ collection: collection }))
+      super.delete(id)
+        .then(collection => this.handler.delete(collection.image)
+          .then(() => resolve({ collection: collection })))
         .catch(err => reject(err))
     })
   }

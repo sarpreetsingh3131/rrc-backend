@@ -1,0 +1,45 @@
+import fs from 'fs'
+import path from 'path'
+import { Buffer } from 'buffer'
+
+import { MyError } from '../error/my-error'
+
+const IMG_DIR = path.join(__dirname, '../../public/assets/img')
+export const COLLECTIONS_DIR = path.join(IMG_DIR, 'collections')
+export const COLORS_DIR = path.join(IMG_DIR, 'colors')
+export const PRODUCTS_DIR = path.join(IMG_DIR, 'products')
+export const SHAPES_DIR = path.join(IMG_DIR, 'shapes')
+
+export class ImageHandler {
+  constructor (directory) {
+    this.directory = directory
+  }
+
+  create (image) {
+    return new Promise((resolve, reject) => {
+      this.validate(image)
+        .then(image => resolve(this.writeImage(image.data.replace(/^data:image\/\w+;base64,/, ''), image.name, image.size)))
+        .catch(err => reject(new MyError(err.message, 400)))
+    })
+  }
+
+  delete (filePath) {
+    return new Promise((resolve, reject) => {
+      fs.unlink(path.join(__dirname, '../../public', filePath), (err) => err ? reject(err.message, 500) : resolve())
+    })
+  }
+
+  validate (image) {
+    return new Promise((resolve, reject) => {
+      (image.data.length > 1 && image.name.length > 1) ? resolve(image) : reject(new MyError('Invalid image', 400))
+    })
+  }
+
+  writeImage (data, name, size) {
+    return new Promise((resolve, reject) => {
+      console.log(name, size)
+      fs.writeFile(this.directory + '/' + name, Buffer.alloc(size, data, 'base64'), (err) =>
+        err ? reject(new MyError(err.message, 400)) : resolve(this.directory.split('public')[1] + '/' + name))
+    })
+  }
+}

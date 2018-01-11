@@ -2,15 +2,18 @@ import mongoose from 'mongoose'
 
 import { Shape } from '../model/shape'
 import { Repository } from './repository'
+import { ImageHandler, SHAPES_DIR } from '../handler/image-handler'
 
-export class ShapeRepository {
+export class ShapeRepository extends Repository {
   constructor () {
-    this.repository = new Repository(mongoose.model('shape', new Shape()))
+    super(mongoose.model('shape', new Shape()))
+    this.handler = new ImageHandler(SHAPES_DIR)
   }
 
   create (shape) {
     return new Promise((resolve, reject) => {
-      this.repository.create({ name: shape.name, image: shape.image })
+      this.handler.create(shape.image)
+        .then(path => { return super.create({ name: shape.name, image: path }) })
         .then(shape => resolve({ shape: shape }))
         .catch(err => reject(err))
     })
@@ -18,7 +21,7 @@ export class ShapeRepository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      this.repository.retrieve(id)
+      super.retrieve(id)
         .then(shapes => resolve(id ? { shape: shapes } : { shapes: shapes }))
         .catch(err => reject(err))
     })
@@ -26,7 +29,8 @@ export class ShapeRepository {
 
   update (shape) {
     return new Promise((resolve, reject) => {
-      this.repository.update(shape.id, { name: shape.name, image: shape.image })
+      this.handler.create(shape.image)
+        .then(path => { return super.update(shape.id, { name: shape.name, image: path }) })
         .then(shape => resolve({ shape: shape }))
         .catch(err => reject(err))
     })
@@ -34,8 +38,9 @@ export class ShapeRepository {
 
   delete (id) {
     return new Promise((resolve, reject) => {
-      this.repository.delete(id)
-        .then(shape => resolve({ shape: shape }))
+      super.delete(id)
+        .then(shape => this.handler.delete(shape.image)
+          .then(() => resolve({ shape: shape })))
         .catch(err => reject(err))
     })
   }

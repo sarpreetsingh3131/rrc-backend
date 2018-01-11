@@ -3,14 +3,14 @@ import mongoose from 'mongoose'
 import { Style } from '../model/style'
 import { Repository } from './repository'
 
-export class ColorRepository {
+export class StyleRepository extends Repository {
   constructor () {
-    this.repository = new Repository(mongoose.model('style', new Style()))
+    super(mongoose.model('style', new Style()))
   }
 
   create (style) {
     return new Promise((resolve, reject) => {
-      this.repository.create({ name: style.name })
+      super.create({ name: style.name })
         .then(style => resolve({ style: style }))
         .catch(err => reject(err))
     })
@@ -18,7 +18,7 @@ export class ColorRepository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      this.repository.retrieve(id)
+      super.retrieve(id)
         .then(styles => resolve(id ? { style: styles } : { styles: styles }))
         .catch(err => reject(err))
     })
@@ -26,7 +26,7 @@ export class ColorRepository {
 
   update (style) {
     return new Promise((resolve, reject) => {
-      this.repository.update(style.id, { style: style.name })
+      super.update(style.id, { style: style.name })
         .then(style => resolve({ style: style }))
         .catch(err => reject(err))
     })
@@ -34,7 +34,7 @@ export class ColorRepository {
 
   delete (id) {
     return new Promise((resolve, reject) => {
-      this.repository.delete(id)
+      super.delete(id)
         .then(style => resolve({ style: style }))
         .catch(err => reject(err))
     })

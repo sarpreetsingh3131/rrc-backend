@@ -3,14 +3,14 @@ import mongoose from 'mongoose'
 import { Size } from '../model/size'
 import { Repository } from './repository'
 
-export class CollectionRepository {
+export class SizeRepository extends Repository {
   constructor () {
-    this.repository = new Repository(mongoose.model('size', new Size()))
+    super(mongoose.model('size', new Size()))
   }
 
   create (size) {
     return new Promise((resolve, reject) => {
-      this.repository.create({ length: size.length, width: size.width })
+      super.create({ length: size.length, width: size.width })
         .then(size => resolve({ size: size }))
         .catch(err => reject(err))
     })
@@ -18,7 +18,7 @@ export class CollectionRepository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      this.repository.retrieve(id)
+      super.retrieve(id)
         .then(sizes => resolve(id ? { size: sizes } : { sizes: sizes }))
         .catch(err => reject(err))
     })
@@ -26,7 +26,7 @@ export class CollectionRepository {
 
   update (size) {
     return new Promise((resolve, reject) => {
-      this.repository.update(size.id, { length: size.length, width: size.width })
+      super.update(size.id, { length: size.length, width: size.width })
         .then(size => resolve({ size: size }))
         .catch(err => reject(err))
     })
@@ -34,7 +34,7 @@ export class CollectionRepository {
 
   delete (id) {
     return new Promise((resolve, reject) => {
-      this.repository.delete(id)
+      super.delete(id)
         .then(size => resolve({ size: size }))
         .catch(err => reject(err))
     })

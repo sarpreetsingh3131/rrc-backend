@@ -2,7 +2,7 @@ import express from 'express'
 
 import { Controller } from './controller'
 import { CREATE_SIZE, RETRIEVE_SIZE, RETRIEVE_SIZES, UPDATE_SIZE, DELETE_SIZE } from '../api/api'
-import { SizeRepository } from '../repository/shape-repository'
+import { SizeRepository } from '../repository/size-repository'
 
 export class SizeController extends express.Router {
   constructor () {

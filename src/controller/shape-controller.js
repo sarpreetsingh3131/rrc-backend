@@ -4,7 +4,7 @@ import { Controller } from './controller'
 import { CREATE_SHAPE, RETRIEVE_SHAPE, RETRIEVE_SHAPES, UPDATE_SHAPE, DELETE_SHAPE } from '../api/api'
 import { ShapeRepository } from '../repository/shape-repository'
 
-export class CollorController extends express.Router {
+export class ShapeController extends express.Router {
   constructor () {
     super()
     this.controller = new Controller(new ShapeRepository())
