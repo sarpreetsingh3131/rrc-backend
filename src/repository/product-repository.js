@@ -1,4 +1,4 @@
-import mongoose, { Promise } from 'mongoose'
+import mongoose from 'mongoose'
 
 import { Product } from '../model/product'
 import { Repository } from './repository'

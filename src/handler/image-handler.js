@@ -37,7 +37,6 @@ export class ImageHandler {
 
   writeImage (data, name, size) {
     return new Promise((resolve, reject) => {
-      console.log(name, size)
       fs.writeFile(this.directory + '/' + name, Buffer.alloc(size, data, 'base64'), (err) =>
         err ? reject(new MyError(err.message, 400)) : resolve(this.directory.split('public')[1] + '/' + name))
     })

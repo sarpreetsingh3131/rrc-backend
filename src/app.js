@@ -14,13 +14,13 @@ import { WeaveController } from './controller/weave-controller'
 new DB().connect()
     .then(msg => {
       let app = express()
-      let port = process.env.PORT || 3000
+      let port = process.env.PORT || 4000
 
       app.use(bodyParser.json())
 
       app.use((req, res, next) => {
         res.type('json')
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4000')
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
         res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE')
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
         res.setHeader('Access-Control-Allow-Credentials', 'true')
@@ -35,7 +35,7 @@ new DB().connect()
             new SizeController(),
             new StyleController(),
             new WeaveController()
-        )
+      )
 
       app.use((req, res, next) => res.status(404).send({ err: 'not found' }))
       app.use((err, req, res, next) => res.status(500).send({ err: err.message }))
