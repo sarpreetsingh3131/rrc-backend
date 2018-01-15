@@ -62,3 +62,6 @@ typings/
 
 # public directory
 public
+
+# dist directory
+dist

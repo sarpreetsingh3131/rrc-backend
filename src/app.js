@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import { config } from 'dotenv'
 
 import { DB } from './db/db'
 import { BASE_URL } from './api/api'
@@ -10,6 +11,8 @@ import { ShapeController } from './controller/shape-controller'
 import { SizeController } from './controller/size-controller'
 import { StyleController } from './controller/style-controller'
 import { WeaveController } from './controller/weave-controller'
+
+config()
 
 new DB().connect()
     .then(msg => {

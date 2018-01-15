@@ -1,6 +1,7 @@
 import webpack from 'webpack'
 import path from 'path'
 import fs from 'fs'
+import Dotenv from 'dotenv-webpack'
 
 var nodeModules = {}
 
@@ -28,9 +29,11 @@ export default {
   externals: nodeModules,
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
+      'process.env': { NODE_ENV: JSON.stringify('production') }
+    }),
+    new Dotenv({
+      path: './.env',
+      safe: false
     })
   ]
 }
