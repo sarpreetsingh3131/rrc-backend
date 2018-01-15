@@ -1,11 +1,11 @@
 import mongoose from 'mongoose'
 
-import { Style } from '../model/style'
+import { Style, STYLE_SCHEMA_NAME } from '../model/style'
 import { Repository } from './repository'
 
 export class StyleRepository extends Repository {
   constructor () {
-    super(mongoose.model('style', new Style()))
+    super(mongoose.model(STYLE_SCHEMA_NAME, new Style()))
   }
 
   create (style) {

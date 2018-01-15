@@ -1,11 +1,11 @@
 import mongoose from 'mongoose'
 
-import { Size } from '../model/size'
+import { Size, SIZE_SCHEMA_NAME } from '../model/size'
 import { Repository } from './repository'
 
 export class SizeRepository extends Repository {
   constructor () {
-    super(mongoose.model('size', new Size()))
+    super(mongoose.model(SIZE_SCHEMA_NAME, new Size()))
   }
 
   create (size) {

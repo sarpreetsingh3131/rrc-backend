@@ -17,9 +17,9 @@ export class Repository {
     })
   }
 
-  retrieve (id) {
+  retrieve (id, populate = '') {
     return new Promise((resolve, reject) => {
-      this.model.find(id ? { _id: id } : {}).exec()
+      this.model.find(id ? { _id: id } : {}).populate(populate).exec()
         .then(entities => entities[0] ? resolve(id ? entities[0] : entities) : reject(new MyError('Entity not found', 404)))
         .catch(err => reject(new MyError(err.message, 400)))
     })

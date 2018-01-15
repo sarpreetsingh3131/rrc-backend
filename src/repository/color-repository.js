@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
 
-import { Color } from '../model/color'
+import { Color, COLOR_SCHEMA_NAME } from '../model/color'
 import { Repository } from './repository'
 import { ImageHandler, COLORS_DIR } from '../handler/image-handler'
 
 export class ColorRepository extends Repository {
   constructor () {
-    super(mongoose.model('color', new Color()))
+    super(mongoose.model(COLOR_SCHEMA_NAME, new Color()))
     this.handler = new ImageHandler(COLORS_DIR)
   }
 

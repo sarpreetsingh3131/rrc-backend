@@ -1,4 +1,12 @@
-import mongoose from 'mongoose'
+import mongoose, { SchemaTypes } from 'mongoose'
+
+import { COLLECTION_SCHEMA_NAME } from './collection'
+import { SHAPE_SCHEMA_NAME } from './shape'
+import { SIZE_SCHEMA_NAME } from './size'
+import { STYLE_SCHEMA_NAME } from './style'
+import { WEAVE_SCHEMA_NAME } from './weave'
+
+export const PRODUCT_SCHEMA_NAME = 'product'
 
 export class Product extends mongoose.Schema {
   constructor () {
@@ -23,11 +31,14 @@ export class Product extends mongoose.Schema {
         required: true,
         trim: true
       },
-      collections: {
-        type: Array,
-        required: true,
-        trim: true
-      },
+      collections: [
+        {
+          type: SchemaTypes.ObjectId,
+          ref: COLLECTION_SCHEMA_NAME,
+          required: false,
+          trim: true
+        }
+      ],
       views: {
         type: Number,
         required: false,
@@ -35,42 +46,34 @@ export class Product extends mongoose.Schema {
         default: 0
       },
       shape: {
-        type: String,
+        type: SchemaTypes.ObjectId,
+        ref: SHAPE_SCHEMA_NAME,
         required: false,
-        trim: true,
-        default: 'none'
+        trim: true
       },
       size: {
-        length: {
-          type: Number,
-          required: false,
-          trim: true,
-          default: 0
-        },
-        width: {
-          type: Number,
-          required: false,
-          trim: true,
-          default: 0
-        }
+        type: SchemaTypes.ObjectId,
+        ref: SIZE_SCHEMA_NAME,
+        required: false,
+        trim: true
       },
       color: {
-        type: String,
+        type: SchemaTypes.ObjectId,
+        ref: COLLECTION_SCHEMA_NAME,
         required: false,
-        trim: true,
-        default: 'none'
+        trim: true
       },
       style: {
-        type: String,
+        type: SchemaTypes.ObjectId,
+        ref: STYLE_SCHEMA_NAME,
         required: false,
-        trim: true,
-        default: 'none'
+        trim: true
       },
       weave: {
-        type: String,
+        type: SchemaTypes.ObjectId,
+        ref: WEAVE_SCHEMA_NAME,
         required: false,
-        trim: true,
-        default: 'none'
+        trim: true
       }
     })
   }

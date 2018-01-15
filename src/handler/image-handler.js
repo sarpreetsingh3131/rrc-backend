@@ -4,7 +4,7 @@ import { Buffer } from 'buffer'
 
 import { MyError } from '../error/my-error'
 
-const IMG_DIR = path.join(__dirname, '../../public/assets/img')
+const IMG_DIR = path.join(__dirname, '../../public/uploads')
 export const COLLECTIONS_DIR = path.join(IMG_DIR, 'collections')
 export const COLORS_DIR = path.join(IMG_DIR, 'colors')
 export const PRODUCTS_DIR = path.join(IMG_DIR, 'products')

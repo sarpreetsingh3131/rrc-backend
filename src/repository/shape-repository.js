@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
 
-import { Shape } from '../model/shape'
+import { Shape, SHAPE_SCHEMA_NAME } from '../model/shape'
 import { Repository } from './repository'
 import { ImageHandler, SHAPES_DIR } from '../handler/image-handler'
 
 export class ShapeRepository extends Repository {
   constructor () {
-    super(mongoose.model('shape', new Shape()))
+    super(mongoose.model(SHAPE_SCHEMA_NAME, new Shape()))
     this.handler = new ImageHandler(SHAPES_DIR)
   }
 

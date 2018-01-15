@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+export const SIZE_SCHEMA_NAME = 'size'
+
 export class Size extends mongoose.Schema {
   constructor () {
     super({

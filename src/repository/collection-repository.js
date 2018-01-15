@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
 
-import { Collection } from '../model/collection'
+import { Collection, COLLECTION_SCHEMA_NAME } from '../model/collection'
 import { Repository } from './repository'
 import { ImageHandler, COLLECTIONS_DIR } from '../handler/image-handler'
 
 export class CollectionRepository extends Repository {
   constructor () {
-    super(mongoose.model('collection', new Collection()))
+    super(mongoose.model(COLLECTION_SCHEMA_NAME, new Collection()))
     this.handler = new ImageHandler(COLLECTIONS_DIR)
   }
 

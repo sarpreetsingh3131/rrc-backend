@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
 
-import { Product } from '../model/product'
+import { Product, PRODUCT_SCHEMA_NAME } from '../model/product'
 import { Repository } from './repository'
 import { ImageHandler, PRODUCTS_DIR } from '../handler/image-handler'
 
 export class ProductRepository extends Repository {
   constructor () {
-    super(mongoose.model('product', new Product()))
+    super(mongoose.model(PRODUCT_SCHEMA_NAME, new Product()))
     this.handler = new ImageHandler(PRODUCTS_DIR)
   }
 
@@ -21,7 +21,7 @@ export class ProductRepository extends Repository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      super.retrieve(id)
+      super.retrieve(id, 'collections shape size color style weave')
         .then(products => resolve(id ? { product: products } : { products: products }))
         .catch(err => reject(err))
     })

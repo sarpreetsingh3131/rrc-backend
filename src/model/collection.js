@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+export const COLLECTION_SCHEMA_NAME = 'collection'
+
 export class Collection extends mongoose.Schema {
   constructor () {
     super({

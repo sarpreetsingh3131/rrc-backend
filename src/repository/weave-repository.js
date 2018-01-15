@@ -1,11 +1,11 @@
 import mongoose from 'mongoose'
 
-import { Weave } from '../model/weave'
+import { Weave, WEAVE_SCHEMA_NAME } from '../model/weave'
 import { Repository } from './repository'
 
 export class WeaveRepository extends Repository {
   constructor () {
-    super(mongoose.model('weave', new Weave()))
+    super(mongoose.model(WEAVE_SCHEMA_NAME, new Weave()))
   }
 
   create (weave) {
