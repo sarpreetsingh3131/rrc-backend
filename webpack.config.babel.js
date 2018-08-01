@@ -28,9 +28,7 @@ export default {
   devtool: 'source-map',
   externals: nodeModules,
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify('production') }
-    }),
+    new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
     new Dotenv({
       path: './.env',
       safe: false

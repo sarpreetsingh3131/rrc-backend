@@ -5,12 +5,9 @@ import { Buffer } from 'buffer'
 import { MyError } from '../error/my-error'
 
 const IMG_DIR = path.join(__dirname, '../../public/uploads')
-export const COLLECTIONS_DIR = path.join(IMG_DIR, 'collections')
-export const COLORS_DIR = path.join(IMG_DIR, 'colors')
 export const PRODUCTS_DIR = path.join(IMG_DIR, 'products')
-export const SHAPES_DIR = path.join(IMG_DIR, 'shapes')
 
-export class ImageHandler {
+export class ImageService {
   constructor (directory) {
     this.directory = directory
   }
@@ -25,7 +22,7 @@ export class ImageHandler {
 
   delete (filePath) {
     return new Promise((resolve, reject) => {
-      fs.unlink(path.join(__dirname, '../../public', filePath), (err) => err ? reject(err.message, 500) : resolve())
+      fs.unlink(path.join(__dirname, '../../public', filePath), (err) => err ? reject(new MyError(err.message, 500)) : resolve())
     })
   }
 

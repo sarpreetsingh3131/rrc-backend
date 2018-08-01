@@ -1,19 +1,14 @@
 import mongoose from 'mongoose'
 
-export const COLOR_SCHEMA_NAME = 'color'
+export const CATEGORY_SCHEMA_NAME = 'category'
 
-export class Color extends mongoose.Schema {
+export class Category extends mongoose.Schema {
   constructor () {
     super({
       name: {
         type: String,
         required: true,
         unique: true,
-        trim: true
-      },
-      image: {
-        type: String,
-        required: true,
         trim: true
       }
     })

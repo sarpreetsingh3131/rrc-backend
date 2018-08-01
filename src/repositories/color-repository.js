@@ -1,17 +1,17 @@
 import mongoose from 'mongoose'
 
-import { Weave, WEAVE_SCHEMA_NAME } from '../model/weave'
+import { Color, COLOR_SCHEMA_NAME } from '../models/color'
 import { Repository } from './repository'
 
-export class WeaveRepository extends Repository {
+export class ColorRepository extends Repository {
   constructor () {
-    super(mongoose.model(WEAVE_SCHEMA_NAME, new Weave()))
+    super(mongoose.model(COLOR_SCHEMA_NAME, new Color()))
   }
 
-  create (weave) {
+  create (color) {
     return new Promise((resolve, reject) => {
-      super.create({ name: weave.name })
-        .then(weave => resolve({ weave: weave }))
+      super.create({ name: color.name })
+        .then(color => resolve(color))
         .catch(err => reject(err))
     })
   }
@@ -19,15 +19,15 @@ export class WeaveRepository extends Repository {
   retrieve (id) {
     return new Promise((resolve, reject) => {
       super.retrieve(id)
-        .then(weaves => resolve(id ? { weave: weaves } : { weaves: weaves }))
+        .then(colors => resolve(id ? colors[0] : colors))
         .catch(err => reject(err))
     })
   }
 
-  update (weave) {
+  update (color) {
     return new Promise((resolve, reject) => {
-      super.update(weave.id, { name: weave.name })
-        .then(weave => resolve({ weave: weave }))
+      super.update(color.id, { name: color.name })
+        .then(color => resolve(color))
         .catch(err => reject(err))
     })
   }
@@ -35,7 +35,7 @@ export class WeaveRepository extends Repository {
   delete (id) {
     return new Promise((resolve, reject) => {
       super.delete(id)
-        .then(weave => resolve({ weave: weave }))
+        .then(color => resolve(color))
         .catch(err => reject(err))
     })
   }

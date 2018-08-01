@@ -20,7 +20,9 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "mongoose": "^4.13.0"
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^4.13.0",
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -30,7 +32,7 @@
     "babel-register": "^6.26.0",
     "dotenv": "^4.0.0",
     "dotenv-webpack": "^1.5.4",
-    "nodemon": "^1.14.9",
+    "nodemon": "^1.18.3",
     "standard": "^10.0.3",
     "webpack": "^3.10.0"
   }

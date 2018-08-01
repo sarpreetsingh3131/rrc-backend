@@ -1,37 +1,35 @@
 import mongoose from 'mongoose'
 
-import { Product, PRODUCT_SCHEMA_NAME } from '../model/product'
+import { Product, PRODUCT_SCHEMA_NAME } from '../models/product'
 import { Repository } from './repository'
-import { ImageHandler, PRODUCTS_DIR } from '../handler/image-handler'
+import { ImageService, PRODUCTS_DIR } from '../services/image-service'
 
 export class ProductRepository extends Repository {
   constructor () {
     super(mongoose.model(PRODUCT_SCHEMA_NAME, new Product()))
-    this.handler = new ImageHandler(PRODUCTS_DIR)
+    this.imageService = new ImageService(PRODUCTS_DIR)
   }
 
   create (product) {
     return new Promise((resolve, reject) => {
-      this.paths(product.images)
-        .then(paths => { return super.create(this.product(product, paths)) })
-        .then(product => resolve({ product: product }))
+      super.create(product)
+        .then(product => resolve(product))
         .catch(err => reject(err))
     })
   }
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      super.retrieve(id, 'collections shape size color style weave')
-        .then(products => resolve(id ? { product: products } : { products: products }))
+      super.retrieve(id, 'category shape size color style weave')
+        .then(products => resolve(id ? products[0] : products))
         .catch(err => reject(err))
     })
   }
 
   update (product) {
     return new Promise((resolve, reject) => {
-      this.paths(product.images)
-        .then(paths => { return super.update(product.id, this.product(product, paths)) })
-        .then(product => resolve({ product: product }))
+      super.update(product.id, product)
+        .then(product => resolve(product))
         .catch(err => reject(err))
     })
   }
@@ -39,8 +37,7 @@ export class ProductRepository extends Repository {
   delete (id) {
     return new Promise((resolve, reject) => {
       super.delete(id)
-        .then(product => this.paths(product.images, false)
-          .then(() => resolve({ product: product })))
+        .then(product => resolve(product))
         .catch(err => reject(err))
     })
   }
@@ -48,7 +45,7 @@ export class ProductRepository extends Repository {
   paths (images, isCreating = true) {
     return new Promise((resolve, reject) => {
       let promises = []
-      images.map(image => promises.push(isCreating ? this.handler.create(image) : this.handler.delete(image)))
+      images.map(image => promises.push(isCreating ? this.imageService.create(image) : this.imageService.delete(image)))
       Promise.all(promises)
         .then(paths => resolve(paths || null))
         .catch(err => reject(err))
@@ -61,7 +58,7 @@ export class ProductRepository extends Repository {
       price: product.price,
       description: product.description,
       images: paths,
-      collections: product.collections,
+      category: product.category,
       views: product.views,
       shape: product.shape,
       size: product.size,

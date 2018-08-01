@@ -1,16 +1,28 @@
 export const BASE_URL = '/api'
 
+export const LOG_IN = '/login'
+
+export const VALIDATE_TOKEN = '/validate-token'
+
 /** *************************************************************** */
 
-export const CREATE_COLLECTION = '/collections'
+export const CREATE_SHOP_INFO = '/shop-info'
 
-export const RETRIEVE_COLLECTION = '/collections/:id'
+export const RETRIEVE_SHOP_INFO = '/shop-info'
 
-export const RETRIEVE_COLLECTIONS = '/collections'
+export const UPDATE_SHOP_INFO = '/shop-info'
 
-export const UPDATE_COLLECTION = '/collections'
+/** *************************************************************** */
 
-export const DELETE_COLLECTION = '/collections/:id'
+export const CREATE_CATEGORY = '/categories'
+
+export const RETRIEVE_CATEGORY = '/categories/:id'
+
+export const RETRIEVE_CATEGORIES = '/categories'
+
+export const UPDATE_CATEGORY = '/categories'
+
+export const DELETE_CATEGORY = '/categories/:id'
 
 /** *************************************************************** */
 

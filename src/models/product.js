@@ -1,10 +1,11 @@
 import mongoose, { SchemaTypes } from 'mongoose'
 
-import { COLLECTION_SCHEMA_NAME } from './collection'
+import { CATEGORY_SCHEMA_NAME } from './category'
 import { SHAPE_SCHEMA_NAME } from './shape'
 import { SIZE_SCHEMA_NAME } from './size'
 import { STYLE_SCHEMA_NAME } from './style'
 import { WEAVE_SCHEMA_NAME } from './weave'
+import { COLOR_SCHEMA_NAME } from './color'
 
 export const PRODUCT_SCHEMA_NAME = 'product'
 
@@ -31,14 +32,12 @@ export class Product extends mongoose.Schema {
         required: true,
         trim: true
       },
-      collections: [
-        {
-          type: SchemaTypes.ObjectId,
-          ref: COLLECTION_SCHEMA_NAME,
-          required: false,
-          trim: true
-        }
-      ],
+      category: {
+        type: SchemaTypes.ObjectId,
+        ref: CATEGORY_SCHEMA_NAME,
+        required: false,
+        trim: true
+      },
       views: {
         type: Number,
         required: false,
@@ -59,7 +58,7 @@ export class Product extends mongoose.Schema {
       },
       color: {
         type: SchemaTypes.ObjectId,
-        ref: COLLECTION_SCHEMA_NAME,
+        ref: COLOR_SCHEMA_NAME,
         required: false,
         trim: true
       },

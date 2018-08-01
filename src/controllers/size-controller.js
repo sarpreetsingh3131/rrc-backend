@@ -2,11 +2,12 @@ import express from 'express'
 
 import { Controller } from './controller'
 import { CREATE_SIZE, RETRIEVE_SIZE, RETRIEVE_SIZES, UPDATE_SIZE, DELETE_SIZE } from '../api/api'
-import { SizeRepository } from '../repository/size-repository'
+import { SizeRepository } from '../repositories/size-repository'
 
 export class SizeController extends express.Router {
   constructor () {
     super()
+
     this.controller = new Controller(new SizeRepository())
 
     this.route(CREATE_SIZE).post((req, res) => this.controller.create(req, res))

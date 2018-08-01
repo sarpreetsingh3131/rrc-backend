@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import { Size, SIZE_SCHEMA_NAME } from '../model/size'
+import { Size, SIZE_SCHEMA_NAME } from '../models/size'
 import { Repository } from './repository'
 
 export class SizeRepository extends Repository {
@@ -10,8 +10,11 @@ export class SizeRepository extends Repository {
 
   create (size) {
     return new Promise((resolve, reject) => {
-      super.create({ length: size.length, width: size.width })
-        .then(size => resolve({ size: size }))
+      super.create({
+        length: size.length,
+        width: size.width
+      })
+        .then(size => resolve(size))
         .catch(err => reject(err))
     })
   }
@@ -19,15 +22,18 @@ export class SizeRepository extends Repository {
   retrieve (id) {
     return new Promise((resolve, reject) => {
       super.retrieve(id)
-        .then(sizes => resolve(id ? { size: sizes } : { sizes: sizes }))
+        .then(sizes => resolve(id ? sizes[0] : sizes))
         .catch(err => reject(err))
     })
   }
 
   update (size) {
     return new Promise((resolve, reject) => {
-      super.update(size.id, { length: size.length, width: size.width })
-        .then(size => resolve({ size: size }))
+      super.update(size.id, {
+        length: size.length,
+        width: size.width
+      })
+        .then(size => resolve(size))
         .catch(err => reject(err))
     })
   }
@@ -35,7 +41,7 @@ export class SizeRepository extends Repository {
   delete (id) {
     return new Promise((resolve, reject) => {
       super.delete(id)
-        .then(size => resolve({ size: size }))
+        .then(size => resolve(size))
         .catch(err => reject(err))
     })
   }

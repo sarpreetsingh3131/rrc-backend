@@ -1,17 +1,17 @@
 import mongoose from 'mongoose'
 
-import { Style, STYLE_SCHEMA_NAME } from '../model/style'
+import { Shape, SHAPE_SCHEMA_NAME } from '../models/shape'
 import { Repository } from './repository'
 
-export class StyleRepository extends Repository {
+export class ShapeRepository extends Repository {
   constructor () {
-    super(mongoose.model(STYLE_SCHEMA_NAME, new Style()))
+    super(mongoose.model(SHAPE_SCHEMA_NAME, new Shape()))
   }
 
-  create (style) {
+  create (shape) {
     return new Promise((resolve, reject) => {
-      super.create({ name: style.name })
-        .then(style => resolve({ style: style }))
+      super.create({ name: shape.name })
+        .then(shape => resolve(shape))
         .catch(err => reject(err))
     })
   }
@@ -19,15 +19,15 @@ export class StyleRepository extends Repository {
   retrieve (id) {
     return new Promise((resolve, reject) => {
       super.retrieve(id)
-        .then(styles => resolve(id ? { style: styles } : { styles: styles }))
+        .then(shapes => resolve(id ? shapes[0] : shapes))
         .catch(err => reject(err))
     })
   }
 
-  update (style) {
+  update (shape) {
     return new Promise((resolve, reject) => {
-      super.update(style.id, { style: style.name })
-        .then(style => resolve({ style: style }))
+      super.update(shape.id, { name: shape.name })
+        .then(shape => resolve(shape))
         .catch(err => reject(err))
     })
   }
@@ -35,7 +35,7 @@ export class StyleRepository extends Repository {
   delete (id) {
     return new Promise((resolve, reject) => {
       super.delete(id)
-        .then(style => resolve({ style: style }))
+        .then(shape => resolve(shape))
         .catch(err => reject(err))
     })
   }

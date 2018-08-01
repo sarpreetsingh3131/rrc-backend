@@ -12,7 +12,7 @@ export class Size extends mongoose.Schema {
       },
       width: {
         type: Number,
-        required: false,
+        required: true,
         trim: true
       }
     })

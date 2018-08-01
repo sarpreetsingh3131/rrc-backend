@@ -2,11 +2,12 @@ import express from 'express'
 
 import { Controller } from './controller'
 import { CREATE_WEAVE, RETRIEVE_WEAVE, RETRIEVE_WEAVES, UPDATE_WEAVE, DELETE_WEAVE } from '../api/api'
-import { WeaveRepository } from '../repository/weave-repository'
+import { WeaveRepository } from '../repositories/weave-repository'
 
 export class WeaveController extends express.Router {
   constructor () {
     super()
+
     this.controller = new Controller(new WeaveRepository())
 
     this.route(CREATE_WEAVE).post((req, res) => this.controller.create(req, res))

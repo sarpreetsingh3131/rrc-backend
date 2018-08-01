@@ -19,15 +19,19 @@ export class Repository {
 
   retrieve (id, populate = '') {
     return new Promise((resolve, reject) => {
-      this.model.find(id ? { _id: id } : {}).populate(populate).exec()
-        .then(entities => entities[0] ? resolve(id ? entities[0] : entities) : reject(new MyError('Entity not found', 404)))
+      this.model.find(id ? { _id: id } : {}).populate(populate).sort('name').exec()
+        .then(entities => id ? (entities[0] ? resolve(entities[0]) : reject(new MyError('Entity not found', 404)))
+          : resolve(entities))
         .catch(err => reject(new MyError(err.message, 400)))
     })
   }
 
   update (id, entity) {
     return new Promise((resolve, reject) => {
-      this.model.findByIdAndUpdate({ _id: id }, entity, { new: true, runValidators: true }).exec()
+      this.model.findByIdAndUpdate({ _id: id }, entity, {
+        new: true,
+        runValidators: true
+      }).exec()
         .then(entity => entity ? resolve(entity) : reject(new MyError('Entity not found', 404)))
         .catch(err => reject(new MyError(err.message, 400)))
     })

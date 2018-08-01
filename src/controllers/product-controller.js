@@ -2,11 +2,12 @@ import express from 'express'
 
 import { Controller } from './controller'
 import { CREATE_PRODUCT, RETRIEVE_PRODUCT, RETRIEVE_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT } from '../api/api'
-import { ProductRepository } from '../repository/product-repository'
+import { ProductRepository } from '../repositories/product-repository'
 
 export class ProductController extends express.Router {
   constructor () {
     super()
+
     this.controller = new Controller(new ProductRepository())
 
     this.route(CREATE_PRODUCT).post((req, res) => this.controller.create(req, res))
