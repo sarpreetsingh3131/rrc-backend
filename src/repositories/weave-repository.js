@@ -6,6 +6,8 @@ import { Repository } from './repository'
 export class WeaveRepository extends Repository {
   constructor () {
     super(mongoose.model(WEAVE_SCHEMA_NAME, new Weave()))
+    this.populate = ''
+    this.sort = 'name'
   }
 
   create (weave) {
@@ -18,15 +20,15 @@ export class WeaveRepository extends Repository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      super.retrieve(id)
-        .then(weaves => resolve(id ? weaves[0] : weaves))
+      super.retrieve(id, this.populate, this.sort)
+        .then(weaves => resolve(weaves))
         .catch(err => reject(err))
     })
   }
 
   update (weave) {
     return new Promise((resolve, reject) => {
-      super.update(weave.id, { name: weave.name })
+      super.update(weave.id, { name: weave.name }, this.populate)
         .then(weave => resolve(weave))
         .catch(err => reject(err))
     })

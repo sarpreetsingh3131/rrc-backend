@@ -6,6 +6,8 @@ import { Repository } from './repository'
 export class SizeRepository extends Repository {
   constructor () {
     super(mongoose.model(SIZE_SCHEMA_NAME, new Size()))
+    this.populate = ''
+    this.sort = 'length'
   }
 
   create (size) {
@@ -21,8 +23,8 @@ export class SizeRepository extends Repository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      super.retrieve(id)
-        .then(sizes => resolve(id ? sizes[0] : sizes))
+      super.retrieve(id, this.populate, this.sort)
+        .then(sizes => resolve(sizes))
         .catch(err => reject(err))
     })
   }
@@ -32,7 +34,7 @@ export class SizeRepository extends Repository {
       super.update(size.id, {
         length: size.length,
         width: size.width
-      })
+      }, this.populate)
         .then(size => resolve(size))
         .catch(err => reject(err))
     })

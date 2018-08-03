@@ -12,6 +12,10 @@ fs.readdirSync('node_modules')
 export default {
   entry: path.join(__dirname, 'src/app.js'),
   target: 'node',
+  node: {
+    __dirname: false,
+    __filename: false
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'app.js'

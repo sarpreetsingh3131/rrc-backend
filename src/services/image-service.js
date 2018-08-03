@@ -4,7 +4,8 @@ import { Buffer } from 'buffer'
 
 import { MyError } from '../error/my-error'
 
-const IMG_DIR = path.join(__dirname, '../../public/uploads')
+const IMG_DIR = path.join(__dirname, process.env.NODE_ENV ? '' : '../../', 'public/assets/uploads')
+const DELETE_PATH = path.join(__dirname, process.env.NODE_ENV ? '' : '../../', 'public')
 export const PRODUCTS_DIR = path.join(IMG_DIR, 'products')
 
 export class ImageService {
@@ -22,7 +23,7 @@ export class ImageService {
 
   delete (filePath) {
     return new Promise((resolve, reject) => {
-      fs.unlink(path.join(__dirname, '../../public', filePath), (err) => err ? reject(new MyError(err.message, 500)) : resolve())
+      fs.unlink(path.join(DELETE_PATH, filePath), (err) => err ? reject(new MyError(err.message, 500)) : resolve())
     })
   }
 

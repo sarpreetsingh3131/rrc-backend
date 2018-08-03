@@ -15,10 +15,11 @@ export class Product extends mongoose.Schema {
       name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
       },
       price: {
-        type: Number,
+        type: String,
         required: true,
         trim: true
       },
@@ -29,8 +30,9 @@ export class Product extends mongoose.Schema {
       },
       images: {
         type: Array,
-        required: true,
-        trim: true
+        required: false,
+        trim: true,
+        default: []
       },
       category: {
         type: SchemaTypes.ObjectId,
@@ -73,6 +75,11 @@ export class Product extends mongoose.Schema {
         ref: WEAVE_SCHEMA_NAME,
         required: false,
         trim: true
+      },
+      created: {
+        type: Date,
+        required: false,
+        default: Date.now()
       }
     })
   }

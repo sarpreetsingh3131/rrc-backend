@@ -26,4 +26,10 @@ export class Controller {
       .then(result => res.status(200).send(result))
       .catch(err => res.status(err.status || 500).send({ message: err.message }))
   }
+
+  search (req, res) {
+    this.repository.search(req.query)
+    .then(result => res.status(200).send(result))
+    .catch(err => res.status(err.status || 500).send({ message: err.message }))
+  }
 }

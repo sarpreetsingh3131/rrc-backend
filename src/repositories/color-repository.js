@@ -6,6 +6,8 @@ import { Repository } from './repository'
 export class ColorRepository extends Repository {
   constructor () {
     super(mongoose.model(COLOR_SCHEMA_NAME, new Color()))
+    this.populate = ''
+    this.sort = 'name'
   }
 
   create (color) {
@@ -18,15 +20,15 @@ export class ColorRepository extends Repository {
 
   retrieve (id) {
     return new Promise((resolve, reject) => {
-      super.retrieve(id)
-        .then(colors => resolve(id ? colors[0] : colors))
+      super.retrieve(id, this.populate, this.sort)
+        .then(colors => resolve(colors))
         .catch(err => reject(err))
     })
   }
 
   update (color) {
     return new Promise((resolve, reject) => {
-      super.update(color.id, { name: color.name })
+      super.update(color.id, { name: color.name }, this.populate)
         .then(color => resolve(color))
         .catch(err => reject(err))
     })

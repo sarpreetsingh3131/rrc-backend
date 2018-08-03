@@ -17,21 +17,22 @@ export class Repository {
     })
   }
 
-  retrieve (id, populate = '') {
+  retrieve (id, populate, sort) {
     return new Promise((resolve, reject) => {
-      this.model.find(id ? { _id: id } : {}).populate(populate).sort('name').exec()
-        .then(entities => id ? (entities[0] ? resolve(entities[0]) : reject(new MyError('Entity not found', 404)))
+      this.model.find(id ? { _id: id } : {}).populate(populate).sort(sort).exec()
+        .then(entities => id
+          ? (entities[0] ? resolve(entities[0]) : reject(new MyError('Entity not found', 404)))
           : resolve(entities))
         .catch(err => reject(new MyError(err.message, 400)))
     })
   }
 
-  update (id, entity) {
+  update (id, entity, populate) {
     return new Promise((resolve, reject) => {
       this.model.findByIdAndUpdate({ _id: id }, entity, {
         new: true,
         runValidators: true
-      }).exec()
+      }).populate(populate).exec()
         .then(entity => entity ? resolve(entity) : reject(new MyError('Entity not found', 404)))
         .catch(err => reject(new MyError(err.message, 400)))
     })
@@ -41,6 +42,14 @@ export class Repository {
     return new Promise((resolve, reject) => {
       this.model.findByIdAndRemove({ _id: id }).exec()
         .then(entity => entity ? resolve(entity) : reject(new MyError('Entity not found', 404)))
+        .catch(err => reject(new MyError(err.message, 400)))
+    })
+  }
+
+  search (query, populate, sort) {
+    return new Promise((resolve, reject) => {
+      this.model.find(query).populate(populate).sort(sort).exec()
+        .then(entities => resolve(entities))
         .catch(err => reject(new MyError(err.message, 400)))
     })
   }

@@ -14,7 +14,9 @@ export class ProductController extends express.Router {
 
     this.route(RETRIEVE_PRODUCT).get((req, res) => this.controller.retrieve(req, res))
 
-    this.route(RETRIEVE_PRODUCTS).get((req, res) => this.controller.retrieve(req, res))
+    this.route(RETRIEVE_PRODUCTS).get((req, res) => req.query.category
+      ? this.controller.search(req, res)
+      : this.controller.retrieve(req, res))
 
     this.route(UPDATE_PRODUCT).put((req, res) => this.controller.update(req, res))
 
