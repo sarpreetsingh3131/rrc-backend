@@ -19,30 +19,29 @@ import { ShopInfoController } from './controllers/shop-info-controller'
 
 config()
 
-console.log({
-  'NODE_ENV': process.env.NODE_ENV,
-  'DB_URI': process.env.DB_URI,
-  'PORT': process.env.PORT,
-  'SECRET': process.env.SECRET,
-  'USERNAME': process.env.USERNAME,
-  'PASSWORD': process.env.PASSWORD
-})
-
 new DB().connect()
   .then(msg => {
     let app = express()
+
     let port = process.env.NODE_ENV ? process.env.PORT : 3000
 
     app.use(bodyParser.json({ limit: '500mb' }))
-    app.use(morgan('common', { stream: fs.createWriteStream(path.join(__dirname, '..', 'access.log'), {flags: 'a'}) }))
-    app.use(express.static(path.join(__dirname, process.env.NODE_ENV ? './' : '..', 'public')))
+
+    app.use(morgan('common', {
+      stream: fs.createWriteStream(path.resolve(__dirname, '../access.log'), {flags: 'a'})
+    }))
+
+    app.use(express.static(path.resolve(__dirname, '../public')))
 
     app.use((req, res, next) => {
       res.type('json')
       res.setHeader('Access-Control-Allow-Origin', '*')
       res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+      next()
+    })
 
+    app.use((req, res, next) => {
       switch (req.method) {
         case 'PUT':
         case 'POST':
@@ -92,6 +91,6 @@ new DB().connect()
     app.use((req, res, next) => res.status(404).send({ message: 'URL not found' }))
     app.use((req, res, next) => res.status(500).send({ message: 'Internal Server Error' }))
 
-    app.listen(port, () => console.log(msg, '\napp is listening on port', port))
+    app.listen(port, () => console.log(msg, '\nserver is listening on port', port))
   })
   .catch(err => console.log(err))

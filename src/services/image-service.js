@@ -4,9 +4,9 @@ import { Buffer } from 'buffer'
 
 import { MyError } from '../error/my-error'
 
-const IMG_DIR = path.join(__dirname, process.env.NODE_ENV ? '' : '../../', 'public/assets/uploads')
-const DELETE_PATH = path.join(__dirname, process.env.NODE_ENV ? '' : '../../', 'public')
-export const PRODUCTS_DIR = path.join(IMG_DIR, 'products')
+const IMG_DIR = path.resolve(__dirname, process.env.NODE_ENV ? '../' : '../../', 'public/assets/uploads')
+const DELETE_PATH = path.resolve(__dirname, process.env.NODE_ENV ? '../' : '../../', 'public')
+export const PRODUCTS_DIR = path.resolve(IMG_DIR, 'products')
 
 export class ImageService {
   constructor (directory) {
