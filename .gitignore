@@ -59,9 +59,3 @@ typings/
 
 # mac files
 .DS_Store
-
-# public directory
-public
-
-# dist directory
-dist

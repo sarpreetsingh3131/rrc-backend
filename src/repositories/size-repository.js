@@ -14,7 +14,8 @@ export class SizeRepository extends Repository {
     return new Promise((resolve, reject) => {
       super.create({
         length: size.length,
-        width: size.width
+        width: size.width,
+        unit: size.unit
       })
         .then(size => resolve(size))
         .catch(err => reject(err))
@@ -33,7 +34,8 @@ export class SizeRepository extends Repository {
     return new Promise((resolve, reject) => {
       super.update(size.id, {
         length: size.length,
-        width: size.width
+        width: size.width,
+        unit: size.unit
       }, this.populate)
         .then(size => resolve(size))
         .catch(err => reject(err))

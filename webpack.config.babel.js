@@ -17,8 +17,8 @@ export default {
     __filename: false
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'app.js'
+    path: path.join(__dirname, 'build'),
+    filename: 'rrc-backend.js'
   },
   module: {
     rules: [

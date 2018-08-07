@@ -6,12 +6,17 @@ export class Size extends mongoose.Schema {
   constructor () {
     super({
       length: {
-        type: Number,
+        type: String,
         required: true,
         trim: true
       },
       width: {
-        type: Number,
+        type: String,
+        required: true,
+        trim: true
+      },
+      unit: {
+        type: String,
         required: true,
         trim: true
       }
